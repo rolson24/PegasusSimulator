@@ -49,7 +49,7 @@ class PegasusInterface:
         if PegasusInterface._is_initialized:
             return
 
-        carb.log_info("Initializing the Pegasus Simulator Extension")
+        carb.log_warn("Initializing the Pegasus Simulator Extension")
         PegasusInterface._is_initialized = True
 
         # Get a handle to the vehicle manager instance which will manage which vehicles are spawned in the world
@@ -67,12 +67,12 @@ class PegasusInterface:
         # Get the px4_path from the extension configuration file
         self._px4_path: str = self._get_px4_path_from_config()
         self._px4_default_airframe: str = self._get_px4_default_airframe_from_config()
-        carb.log_info("Default PX4 path:" + str(self._px4_path))
+        carb.log_warn("Default PX4 path:" + str(self._px4_path))
 
         # Get the ardupilot_path from the extension configuration file
         self._ardupilot_path: str = self._get_ardupilot_path_from_config()
         self._ardupilot_default_airframe: str = self._get_ardupilot_default_airframe_from_config()
-        carb.log_info("Default ArduPilot path:" + str(self._ardupilot_path))
+        carb.log_warn("Default ArduPilot path:" + str(self._ardupilot_path))
 
 
     @property
@@ -295,6 +295,7 @@ class PegasusInterface:
             usd_path (str): The path where the USD file describing the world is located.
             force_clear (bool): Whether to perform a clear before loading the asset. Defaults to False.
         """
+        # carb.log_warn("Loading a new environment into the simulator. Please wait...")
         asyncio.ensure_future(self.load_environment_async(usd_path, force_clear))
 
     def load_nvidia_environment(self, environment_asset: str = "Hospital/hospital.usd"):
